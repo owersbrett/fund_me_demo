@@ -21,6 +21,13 @@ contract FundMe {
         _;
     }
 
+    function getEntranceFee() public view returns (uint256) {
+        uint256 minimumUSD = 50 * 10**18;
+        uint256 price = getPrice();
+        uint256 precision = 1 * 10**18;
+        return (minimumUSD * precision) / price;
+    }
+
     function fund() public payable {
         uint256 minimumUSD = 50 * 10**16;
 
@@ -39,8 +46,7 @@ contract FundMe {
     /**
      * Returns the latest price
      */
-    function getPrice() public view returns (uint256) { 
-
+    function getPrice() public view returns (uint256) {
         (, int256 price, , , ) = priceFeed.latestRoundData();
         return uint256(price * 10000000000);
     }
