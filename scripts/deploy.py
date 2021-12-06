@@ -1,12 +1,16 @@
 from brownie import FundMe, network, config, MockV3Aggregator
-from scripts.helpful_scripts import deploy_mocks, get_account
+from scripts.helpful_scripts import (
+    deploy_mocks,
+    get_account,
+    LOCAL_BLOCKCHAIN_ENVIRONMENTS,
+)
 from web3 import Web3
 
 
 def deploy_fund_me():
     account = get_account()
     active_network = network.show_active()
-    development_network_active = active_network == "development"
+    development_network_active = active_network in LOCAL_BLOCKCHAIN_ENVIRONMENTS
 
     if development_network_active:
         deploy_mocks()
